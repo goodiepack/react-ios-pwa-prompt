@@ -23,15 +23,16 @@ export default ({
   copyShareButtonLabel = "1) Press the 'Share' button on the menu bar below.",
   copyAddHomeButtonLabel = "2) Press 'Add to Home Screen'.",
   copyClosePrompt = "Cancel",
+  localStoragePrefix = "",
   delay = 1000,
   debug = false,
-  onClose = () => {},
+  onClose = () => { },
 }) => {
-  let promptData = JSON.parse(localStorage.getItem("iosPwaPrompt"));
+  let promptData = JSON.parse(localStorage.getItem(`${localStoragePrefix}iosPwaPrompt`));
 
   if (promptData === null) {
     promptData = { isiOS: deviceCheck(), visits: 0 };
-    localStorage.setItem("iosPwaPrompt", JSON.stringify(promptData));
+    localStorage.setItem(`${localStoragePrefix}iosPwaPrompt`, JSON.stringify(promptData));
   }
 
   if (promptData.isiOS || debug) {
@@ -40,7 +41,7 @@ export default ({
 
     if (belowMaxVisits || debug) {
       localStorage.setItem(
-        "iosPwaPrompt",
+        `${localStoragePrefix}iosPwaPrompt`,
         JSON.stringify({
           ...promptData,
           visits: promptData.visits + 1,
@@ -56,6 +57,7 @@ export default ({
             copyAddHomeButtonLabel={copyAddHomeButtonLabel}
             copyShareButtonLabel={copyShareButtonLabel}
             copyClosePrompt={copyClosePrompt}
+            localStoragePrefix={localStoragePrefix}
             permanentlyHideOnDismiss={permanentlyHideOnDismiss}
             promptData={promptData}
             maxVisits={timesToShow + promptOnVisit}

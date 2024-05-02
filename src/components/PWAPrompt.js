@@ -12,6 +12,7 @@ const PWAPrompt = ({
   copyAddHomeButtonLabel,
   copyShareButtonLabel,
   copyClosePrompt,
+  localStoragePrefix,
   permanentlyHideOnDismiss,
   promptData,
   maxVisits,
@@ -48,7 +49,7 @@ const PWAPrompt = ({
 
     if (permanentlyHideOnDismiss) {
       localStorage.setItem(
-        "iosPwaPrompt",
+        `${localStoragePrefix}iosPwaPrompt`,
         JSON.stringify({
           ...promptData,
           visits: maxVisits,
